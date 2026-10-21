@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GS7 – Unit 5 – Luyện tập tuần 21/10</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1f2430;--sub:#5b6270;--line:#e1e4ec;--brand:#3d5af1;--good:#16794d;--good-bg:#e6f6ed;--bad:#b3262d;--bad-bg:#fdeaea;--gold:#f5a623}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:18px;padding:20px 14px 90px}
+.wrap{max-width:760px;margin:0 auto}
+h1{font-size:1.45rem;margin:0 0 4px}
+.sub{color:var(--sub);font-size:.95rem;margin:0 0 14px}
+.hud{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0 10px}
+.bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;background:var(--brand);width:0;transition:width .25s}
+.hudrow{display:flex;justify-content:space-between;font-size:.9rem;color:var(--sub);margin-top:5px;gap:8px;flex-wrap:wrap}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.badge{font-size:.8rem;padding:3px 9px;border-radius:99px;background:#eceef5;color:#8a90a0;border:1px solid var(--line)}
+.badge.on{background:#fff4d9;color:#7a5200;border-color:var(--gold);font-weight:700}
+.info{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-wrap:wrap;gap:10px 14px;margin-bottom:16px}
+.info label{display:flex;flex-direction:column;font-size:.85rem;color:var(--sub);gap:4px;flex:1 1 170px}
+.info input{border:1.5px solid var(--line);border-radius:10px;padding:10px;font-size:1rem;font-family:inherit}
+.info input.miss{border-color:var(--bad)}
+section.lv{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin-bottom:18px}
+section.lv h2{font-size:1.1rem;margin:0 0 2px}
+.desc{color:var(--sub);font-size:.92rem;margin:0 0 10px}
+.passage{background:#f1f4ff;border-left:4px solid var(--brand);padding:12px 14px;border-radius:8px;margin:8px 0 6px;font-size:1rem}
+.q{border-top:1px solid var(--line);padding:14px 0}
+.q:first-of-type{border-top:none}
+.qt{margin-bottom:8px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.btn{border:1.5px solid var(--line);background:#fff;color:var(--ink);padding:11px 14px;border-radius:10px;font-size:1rem;text-align:left;cursor:pointer;font-family:inherit}
+.btn:hover{border-color:var(--brand)}
+.btn.sel{border-color:var(--brand);background:#eef1ff;font-weight:600}
+.btn.ok{border-color:var(--good);background:var(--good-bg);color:var(--good);font-weight:700}
+.btn.no{border-color:var(--bad);background:var(--bad-bg);color:var(--bad);font-weight:700}
+input.txt{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;font-size:1rem;font-family:inherit}
+input.txt:focus{outline:none;border-color:var(--brand)}
+.fb{display:none;margin-top:8px;padding:9px 12px;border-radius:8px;font-size:.92rem}
+.fb.show{display:block}.fb.good{background:var(--good-bg);color:var(--good)}.fb.bad{background:var(--bad-bg);color:var(--bad)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+button.p{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:13px 22px;font-size:1rem;font-weight:700;cursor:pointer}
+button.p:disabled{opacity:.55;cursor:not-allowed}
+button.s{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:13px 22px;font-size:1rem;font-weight:700;cursor:pointer}
+#err{color:var(--bad);font-weight:600;margin-top:8px;display:none}
+#res{display:none;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center;margin-top:18px}
+#res.show{display:block}
+.big{font-size:2.3rem;font-weight:800;color:var(--brand)}
+.rank{font-size:1.2rem;font-weight:800;margin:6px 0}
+#st{font-weight:600;font-size:.9rem;margin-top:8px}
+#st.ok{color:var(--good)}#st.err{color:var(--bad)}
+#prac{display:none;margin-top:18px}
+#prac.show{display:block}
+u{text-decoration:underline;text-underline-offset:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>GS7 – Unit 5 – Luyện tập tuần 21/10</h1>
+<p class="sub">Food and Drink · Ăn uống · 35 câu · khoảng 25–30 phút. Mỗi câu đúng +10 XP, đúng 3 câu liền → Combo x2, BOSS +20 XP/câu.</p>
+<div class="info">
+<label>Trường (không bắt buộc)<input id="stuSchool" type="text" placeholder="Tên trường" autocomplete="off"></label>
+<label>Lớp *<input id="stuClass" type="text" placeholder="VD: 7A1" autocomplete="off"></label>
+<label>Họ và tên *<input id="stuName" type="text" placeholder="Họ và tên" autocomplete="off"></label>
+</div>
+<div class="hud">
+<div class="bar"><div class="fill" id="fill"></div></div>
+<div class="hudrow"><span id="plabel">Đã trả lời: 0/35</span><span id="xplabel">XP: 0</span></div>
+<div class="badges" id="badges"></div>
+</div>
+<div id="root"></div>
+<div class="row"><button class="p" id="submitBtn">Nộp bài</button><button class="s" id="resetBtn">Làm lại từ đầu</button></div>
+<div id="err"></div>
+<div id="res">
+<div>Điểm của em (thang 10)</div>
+<div class="big" id="score10"></div>
+<div id="cnt"></div>
+<div class="rank" id="rank"></div>
+<div id="xpres"></div>
+<div id="st"></div>
+<div class="row" style="justify-content:center"><button class="s" id="pracBtn">Luyện lại câu sai</button></div>
+<p class="sub" id="pracNote" style="display:none">Phần luyện lại chỉ để ôn tập, không gửi lại điểm.</p>
+</div>
+<div id="prac"></div>
+</div>
+<script>
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycby08od-VjK63bcLdiXGBgjz9imiBImjbBBKmjHqN1AnzfpBhEjFyItSniMfbPKm9TA/exec";
+const CLASS_LABEL="GS7";
+const TEST_NAME="Unit 5 - Food and Drink - Luyen tap tuan 2110";
+const CFG={"unit": 5, "title": "Food and Drink", "sound": "/ɒ/ và /ɔː/", "passage": "Linh's family had a special dinner last night. Her mother cooked a big pot of beef noodle soup with a lot of onions. Her father bought some fresh fruit from the market. Linh made fried vegetables with lots of tomatoes, but there was not much salt in it. They all enjoyed the meal and drank some green tea after dinner.", "levels": [{"key": "L1", "name": "LEVEL 1 – Khởi động", "desc": "Chọn nghĩa tiếng Việt đúng của từ.", "badge": "⭐ Từ vựng"}, {"key": "L2", "name": "LEVEL 2 – Phát âm", "desc": "Chọn đáp án đúng về phát âm và trọng âm.", "badge": "🔊 Phát âm"}, {"key": "L3", "name": "LEVEL 3 – Từ vựng & ngữ pháp", "desc": "Chọn đáp án đúng A, B, C hoặc D.", "badge": "🧠 Ngữ pháp"}, {"key": "L4", "name": "LEVEL 4 – Word form", "desc": "Viết dạng đúng của từ trong ngoặc.", "badge": "🔧 Word form"}, {"key": "L5", "name": "LEVEL 5 – Đồng nghĩa / Trái nghĩa", "desc": "Hai câu đầu: đồng nghĩa. Hai câu sau: trái nghĩa (từ gạch chân).", "badge": "🔁 Từ nghĩa"}, {"key": "L6", "name": "LEVEL 6 – Tìm lỗi sai", "desc": "Chọn phần (A, B, C hoặc D) có lỗi sai.", "badge": "🔍 Thám tử"}, {"key": "L7", "name": "LEVEL 7 – Viết lại câu", "desc": "Viết lại câu theo gợi ý, giữ nguyên nghĩa.", "badge": "✍️ Viết câu"}, {"key": "B", "name": "BOSS LEVEL – Đọc hiểu (+20 XP/câu)", "desc": "Đọc đoạn văn rồi trả lời.", "badge": "🏆 Boss"}], "qs": [{"t": "mc", "q": "<b>omelette</b> nghĩa là gì?", "o": ["bánh mì nướng", "đậu phụ rán", "bánh kếp", "trứng tráng"], "a": 3, "e": "omelette = trứng tráng.", "lv": 0, "xp": 10}, {"t": "mc", "q": "<b>pork</b> nghĩa là gì?", "o": ["thịt lợn", "tôm", "thịt bò", "thịt gà"], "a": 0, "e": "pork = thịt lợn.", "lv": 0, "xp": 10}, {"t": "mc", "q": "<b>spring roll</b> nghĩa là gì?", "o": ["bánh táo", "phở bò", "chả giò", "súp lươn"], "a": 2, "e": "spring roll = chả giò.", "lv": 0, "xp": 10}, {"t": "mc", "q": "<b>fish sauce</b> nghĩa là gì?", "o": ["bột mì", "hạt tiêu", "nước mắm", "nước dùng"], "a": 2, "e": "fish sauce = nước mắm.", "lv": 0, "xp": 10}, {"t": "mc", "q": "<b>pepper</b> nghĩa là gì?", "o": ["hành tây", "đường", "muối", "hạt tiêu"], "a": 3, "e": "pepper = hạt tiêu.", "lv": 0, "xp": 10}, {"t": "mc", "q": "Chọn từ có phần gạch chân phát âm KHÁC:", "o": ["h<u>o</u>t", "<u>o</u>melette", "br<u>o</u>th", "p<u>or</u>k"], "a": 3, "e": "pork đọc /ɔː/; các từ còn lại đọc /ɒ/.", "lv": 1, "xp": 10}, {"t": "mc", "q": "Chọn từ có phần gạch chân phát âm KHÁC:", "o": ["m<u>or</u>ning", "c<u>or</u>n", "f<u>or</u>k", "<u>o</u>range"], "a": 3, "e": "orange đọc /ɒ/; các từ còn lại đọc /ɔː/.", "lv": 1, "xp": 10}, {"t": "mc", "q": "Chọn từ có trọng âm chính KHÁC:", "o": ["butter", "onion", "tomato", "pepper"], "a": 2, "e": "tomato nhấn âm 2; các từ còn lại nhấn âm 1.", "lv": 1, "xp": 10}, {"t": "mc", "q": "Chọn từ có trọng âm chính KHÁC:", "o": ["recipe", "boneless", "mealtime", "ingredient"], "a": 3, "e": "ingredient nhấn âm 2; các từ còn lại nhấn âm 1.", "lv": 1, "xp": 10}, {"t": "mc", "q": "There is ___ milk in the fridge.", "o": ["many", "some", "few", "a few"], "a": 1, "e": "milk không đếm được, câu khẳng định → some.", "lv": 2, "xp": 10}, {"t": "mc", "q": "How ___ rice do you eat every day?", "o": ["much", "many", "long", "old"], "a": 0, "e": "rice không đếm được → How much.", "lv": 2, "xp": 10}, {"t": "mc", "q": "How ___ spring rolls did your mother make?", "o": ["much", "long", "far", "many"], "a": 3, "e": "spring rolls đếm được số nhiều → How many.", "lv": 2, "xp": 10}, {"t": "mc", "q": "We need ___ tomatoes and onions for the soup.", "o": ["a lot of", "an", "a little", "much"], "a": 0, "e": "tomatoes và onions số nhiều, câu khẳng định → a lot of.", "lv": 2, "xp": 10}, {"t": "mc", "q": "There aren't ___ eggs left. Let's buy some.", "o": ["a", "much", "many", "some"], "a": 2, "e": "eggs đếm được, câu phủ định → many.", "lv": 2, "xp": 10}, {"t": "mc", "q": "I'd like ___ pancakes, please.", "o": ["a lot", "some", "much", "any"], "a": 1, "e": "Lời yêu cầu/đề nghị: some + danh từ số nhiều.", "lv": 2, "xp": 10}, {"t": "mc", "q": "There ___ a lot of oil in this dish.", "o": ["is", "be", "am", "are"], "a": 0, "e": "oil không đếm được → is.", "lv": 2, "xp": 10}, {"t": "mc", "q": "Add one ___ of salt and stir.", "o": ["litre", "slice", "kilo", "teaspoon"], "a": 3, "e": "teaspoon = thìa cà phê.", "lv": 2, "xp": 10}, {"t": "mc", "q": "I usually have a ___ of noodles for lunch.", "o": ["gram", "bowl", "kilo", "litre"], "a": 1, "e": "a bowl of noodles = một bát mì.", "lv": 2, "xp": 10}, {"t": "mc", "q": "Can you give me the ___ for this cake? I want to make it at home.", "o": ["broth", "slice", "recipe", "flour"], "a": 2, "e": "recipe = công thức làm món ăn.", "lv": 2, "xp": 10}, {"t": "fill", "q": "This soup is too ___. Add some water. (salt)", "a": ["salty"], "e": "salt → salty (adj).", "lv": 3, "xp": 10}, {"t": "fill", "q": "The soup is very ___. I want some more. (taste)", "a": ["tasty"], "e": "taste → tasty (adj).", "lv": 3, "xp": 10}, {"t": "fill", "q": "We often eat ___ rice for dinner. (fry)", "a": ["fried"], "e": "fry → fried (adj).", "lv": 3, "xp": 10}, {"t": "fill", "q": "He is very ___. He hasn't eaten all day. (hunger)", "a": ["hungry"], "e": "hunger → hungry (adj).", "lv": 3, "xp": 10}, {"t": "mc", "q": "This pork is <u>boneless</u>. (Đồng nghĩa)", "o": ["very old", "without bones", "too salty", "very hot"], "a": 1, "e": "boneless = không xương ≈ without bones.", "lv": 4, "xp": 10}, {"t": "mc", "q": "We had a <u>big</u> dinner. (Đồng nghĩa)", "o": ["short", "cheap", "cold", "large"], "a": 3, "e": "big ≈ large.", "lv": 4, "xp": 10}, {"t": "mc", "q": "Mineral water is <u>cheap</u> here. (Trái nghĩa)", "o": ["clean", "fresh", "big", "expensive"], "a": 3, "e": "cheap ≠ expensive.", "lv": 4, "xp": 10}, {"t": "mc", "q": "Add <u>more</u> salt to the soup. (Trái nghĩa)", "o": ["many", "less", "new", "tall"], "a": 1, "e": "more ≠ less.", "lv": 4, "xp": 10}, {"t": "err", "q": "<b>(A) How many (B) milk (C) do you (D) need?</b>", "o": ["How many", "milk", "do you", "need"], "a": 0, "e": "milk không đếm được → How much.", "lv": 5, "xp": 10}, {"t": "err", "q": "<b>(A) My father (B) drinks (C) much (D) green tea every day.</b>", "o": ["My father", "drinks", "much", "green tea every day"], "a": 2, "e": "much không dùng trong câu khẳng định → a lot of / lots of.", "lv": 5, "xp": 10}, {"t": "err", "q": "<b>(A) There (B) are (C) lots of (D) butter on the toast.</b>", "o": ["There", "are", "lots of", "butter on the toast"], "a": 1, "e": "butter không đếm được → There is.", "lv": 5, "xp": 10}, {"t": "rw", "q": "There are three bottles of milk in the fridge. → <b>How many bottles ...?</b>", "a": ["How many bottles of milk are there in the fridge"], "e": "How many + N số nhiều + are there ...?", "lv": 6, "xp": 10}, {"t": "rw", "q": "Lan uses 200 grams of flour. → <b>How much ...?</b>", "a": ["How much flour does Lan use"], "e": "How much + N không đếm được + does Lan use?", "lv": 6, "xp": 10}, {"t": "rw", "q": "My mother puts a lot of onions in the soup. → <b>My mother puts lots of ...</b>", "a": ["My mother puts lots of onions in the soup"], "e": "a lot of = lots of.", "lv": 6, "xp": 10}, {"t": "tf", "q": "Linh's father cooked the soup.", "o": ["True", "False"], "a": 1, "e": "Mẹ của Linh nấu súp (Her mother cooked ... soup).", "lv": 7, "xp": 20}, {"t": "mc", "q": "What did Linh's family drink after dinner?", "o": ["Orange juice.", "Milk.", "Green tea.", "Lemonade."], "a": 2, "e": "Đoạn văn: drank some green tea after dinner.", "lv": 7, "xp": 20}]};
+const QS=CFG.qs, LV=CFG.levels;
+const ans=Array(QS.length).fill(null);
+let submitted=false, sent=false;
+function norm(s){return (s||"").toString().toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?,;:"']/g,"").replace(/\s+/g," ").trim();}
+function isRight(q,v){
+  if(v===null||v==="")return false;
+  if(q.t==="fill"||q.t==="rw"){const n=norm(v);return q.a.some(x=>norm(x)===n);}
+  return v===q.a;
+}
+function rightText(q){return q.t==="fill"||q.t==="rw"?q.a[0]:(q.t==="err"?"("+"ABCD"[q.a]+") "+q.o[q.a].replace(/<[^>]+>/g,""):q.o[q.a].replace(/<[^>]+>/g,""));}
+function qHtml(q,i,n){
+  let h='<div class="q" id="q'+i+'"><div class="qt"><b>'+n+'.</b> '+q.q+'</div>';
+  if(q.t==="fill"||q.t==="rw") h+='<input class="txt" type="text" data-i="'+i+'" autocomplete="off" autocapitalize="off" placeholder="'+(q.t==="rw"?"Viết cả câu ở đây…":"Viết đáp án…")+'">';
+  else{h+='<div class="opts">';q.o.forEach((o,k)=>{h+='<button type="button" class="btn" data-i="'+i+'" data-k="'+k+'">'+(q.t==="err"?"ABCD"[k]+". ":(q.t==="tf"?"":"ABCD"[k]+". "))+o+'</button>';});h+='</div>';}
+  return h+'<div class="fb" id="fb'+i+'"></div></div>';
+}
+const root=document.getElementById("root");
+let num=0;
+LV.forEach((L,li)=>{
+  const sec=document.createElement("section");sec.className="lv";
+  let h='<h2>'+L.name+'</h2><p class="desc">'+L.desc+(li===1?" Cặp âm: "+CFG.sound+".":"")+'</p>';
+  if(L.key==="B")h+='<div class="passage">'+CFG.passage+'</div>';
+  QS.forEach((q,i)=>{if(q.lv===li){num++;h+=qHtml(q,i,num);}});
+  sec.innerHTML=h;root.appendChild(sec);
+});
+const bd=document.getElementById("badges");
+LV.forEach(L=>{const s=document.createElement("span");s.className="badge";s.textContent=L.badge;s.id="b_"+L.key;bd.appendChild(s);});
+function progress(){
+  const a=ans.filter(v=>v!==null&&v!=="").length;
+  document.getElementById("fill").style.width=(a/QS.length*100)+"%";
+  document.getElementById("plabel").textContent="Đã trả lời: "+a+"/"+QS.length;
+  LV.forEach((L,li)=>{const idx=QS.map((q,i)=>q.lv===li?i:-1).filter(i=>i>=0);
+    document.getElementById("b_"+L.key).classList.toggle("on",idx.every(i=>ans[i]!==null&&ans[i]!==""));});
+}
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".btn");if(!b||submitted)return;
+  const i=+b.dataset.i,k=+b.dataset.k;
+  b.parentNode.querySelectorAll(".btn").forEach(x=>x.classList.remove("sel"));
+  b.classList.add("sel");ans[i]=k;progress();
+});
+root.addEventListener("input",e=>{
+  const t=e.target;if(!t.classList.contains("txt")||submitted)return;
+  ans[+t.dataset.i]=t.value.trim();progress();
+});
+function sendResult(p){
+  const st=document.getElementById("st");
+  st.className="";st.textContent="Đang gửi kết quả…";
+  fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(p)})
+  .then(()=>{st.className="ok";st.textContent="Đã gửi kết quả về hệ thống.";})
+  .catch(er=>{st.className="err";st.textContent="Gửi thất bại (kiểm tra mạng): "+er.message;sent=false;});
+}
+document.getElementById("submitBtn").addEventListener("click",()=>{
+  if(submitted)return;
+  const nm=document.getElementById("stuName"),cl=document.getElementById("stuClass"),sc=document.getElementById("stuSchool");
+  nm.classList.remove("miss");cl.classList.remove("miss");
+  const er=document.getElementById("err");
+  if(!nm.value.trim()||!cl.value.trim()){
+    if(!nm.value.trim())nm.classList.add("miss");if(!cl.value.trim())cl.classList.add("miss");
+    er.style.display="block";er.textContent="Em hãy điền Họ và tên và Lớp trước khi nộp bài nhé.";
+    window.scrollTo({top:0,behavior:"smooth"});return;
+  }
+  er.style.display="none";submitted=true;
+  let correct=0,xp=0,streak=0;
+  QS.forEach((q,i)=>{
+    const ok=isRight(q,ans[i]);const fb=document.getElementById("fb"+i);
+    if(ok){correct++;const mult=streak>=3?2:1;xp+=q.xp*mult;streak++;fb.className="fb show good";fb.textContent="✓ Chính xác!"+(mult===2?" Combo x2!":"");}
+    else{streak=0;fb.className="fb show bad";fb.innerHTML="✗ Đáp án đúng: <b>"+rightText(q)+"</b>. "+q.e;}
+    const box=document.getElementById("q"+i);
+    if(q.t==="fill"||q.t==="rw"){box.querySelector("input").disabled=true;}
+    else box.querySelectorAll(".btn").forEach((b,k)=>{b.disabled=true;b.classList.remove("sel");if(k===q.a)b.classList.add("ok");else if(k===ans[i])b.classList.add("no");});
+  });
+  const total=QS.length,s10=(correct/total*10).toFixed(1),pct=correct/total*100;
+  document.getElementById("score10").textContent=s10+"/10";
+  document.getElementById("cnt").textContent="Đúng "+correct+"/"+total+" câu";
+  document.getElementById("rank").textContent=pct>=90?"🌟 Siêu sao Unit "+CFG.unit:(pct>=70?"⚔️ Chiến binh":"💪 Cố lên – làm lại để lên hạng");
+  document.getElementById("xpres").textContent="XP thưởng: "+xp;
+  document.getElementById("xplabel").textContent="XP: "+xp;
+  const r=document.getElementById("res");r.classList.add("show");
+  document.getElementById("submitBtn").disabled=true;
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+  if(!sent){sent=true;sendResult({className:CLASS_LABEL,testName:TEST_NAME,school:sc.value.trim(),studentClass:cl.value.trim(),name:nm.value.trim(),correct:correct,total:total,score10:s10,timestamp:new Date().toISOString()});}
+});
+document.getElementById("resetBtn").addEventListener("click",()=>location.reload());
+/* Luyện lại câu sai (không gửi điểm) */
+document.getElementById("pracBtn").addEventListener("click",()=>{
+  const wrong=QS.map((q,i)=>isRight(q,ans[i])?-1:i).filter(i=>i>=0);
+  const p=document.getElementById("prac");document.getElementById("pracNote").style.display="block";
+  if(!wrong.length){p.innerHTML='<section class="lv"><h2>🎉 Em không sai câu nào!</h2></section>';p.className="show";return;}
+  let h='<section class="lv"><h2>Luyện lại câu sai ('+wrong.length+' câu)</h2><p class="desc">Chỉ để luyện tập, điểm không được gửi lại.</p>';
+  wrong.forEach((i,n)=>{const q=QS[i];
+    h+='<div class="q" data-p="'+i+'"><div class="qt"><b>'+(n+1)+'.</b> '+q.q+'</div>';
+    if(q.t==="fill"||q.t==="rw")h+='<input class="txt" type="text" autocomplete="off" autocapitalize="off"><div class="row"><button class="s chk" type="button">Kiểm tra</button></div>';
+    else{h+='<div class="opts">';q.o.forEach((o,k)=>{h+='<button type="button" class="btn pb" data-k="'+k+'">'+(q.t==="tf"?"":"ABCD"[k]+". ")+o+'</button>';});h+='</div>';}
+    h+='<div class="fb"></div></div>';});
+  p.innerHTML=h+'</section>';p.className="show";p.scrollIntoView({behavior:"smooth"});
+  p.addEventListener("click",e=>{
+    const box=e.target.closest("[data-p]");if(!box)return;const q=QS[+box.dataset.p],fb=box.querySelector(".fb");
+    const b=e.target.closest(".pb");
+    if(b){const k=+b.dataset.k,ok=k===q.a;
+      box.querySelectorAll(".pb").forEach((x,j)=>{x.classList.remove("ok","no");if(j===q.a)x.classList.add("ok");else if(j===k)x.classList.add("no");});
+      fb.className="fb show "+(ok?"good":"bad");fb.innerHTML=ok?"✓ Đúng rồi!":"✗ Chưa đúng. Đáp án: <b>"+rightText(q)+"</b>. "+q.e;}
+    if(e.target.classList.contains("chk")){const v=box.querySelector("input").value,ok=isRight(q,v);
+      fb.className="fb show "+(ok?"good":"bad");fb.innerHTML=ok?"✓ Đúng rồi!":"✗ Chưa đúng. Đáp án: <b>"+rightText(q)+"</b>. "+q.e;}
+  });
+});
+progress();
+</script>
+</body>
+</html>
